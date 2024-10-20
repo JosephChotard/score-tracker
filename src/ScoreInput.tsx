@@ -54,7 +54,7 @@ function ScoreInput({ playerNames, round, onSubmit }: ScoreInputProps) {
         [scores]
     );
 
-    const broadcastScores = () => {
+    const broadcastScores = useCallback(() => {
         onSubmit(
             round,
             scores.map((score) => ({
@@ -63,7 +63,7 @@ function ScoreInput({ playerNames, round, onSubmit }: ScoreInputProps) {
             }))
         );
         clearScores()
-    };
+    }, [clearScores, onSubmit, round, scores]);
 
     return (
         <Card>
