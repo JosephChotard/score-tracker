@@ -1,29 +1,31 @@
 import { PersonIcon, PlusIcon } from "@radix-ui/react-icons";
 import { Box, Button, Flex, Heading, IconButton, Text, TextField } from "@radix-ui/themes";
 import React from "react";
+import { Link } from "react-router-dom";
 
 function UserInfo() {
     const [playerName, setPlayerName] = React.useState<string>("");
     const [players, setPlayers] = React.useState<string[]>([]);
 
-    
     const onChangePlayerName = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPlayerName(event.currentTarget.value);
-    }
+    };
 
     const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
             onClickAddPlayer();
         }
-    }
+    };
 
     const onClickAddPlayer = () => {
-        setPlayers([playerName, ...players.filter(name => name !== playerName)]);
+        setPlayers([
+            playerName,
+            ...players.filter((name) => name !== playerName),
+        ]);
         setPlayerName("");
-    }
+    };
 
     const url = `/scores?players=${encodeURIComponent(players.join(","))}`;
-
 
     return (
         <Box p="7">
@@ -53,7 +55,7 @@ function UserInfo() {
                     ))}
                 </Flex>
                 <Button asChild>
-                    <a href={url}>Track scores</a>
+                    <Link to={url}>Track scores</Link>
                 </Button>
             </Flex>
         </Box>

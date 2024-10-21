@@ -2,14 +2,13 @@ import { Theme } from "@radix-ui/themes";
 import "@radix-ui/themes/styles.css";
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import './index.css';
-import reportWebVitals from './reportWebVitals';
+import { createHashRouter, RouterProvider } from "react-router-dom";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
 import Scores from "./Scores";
 import UserInfo from "./UserInfo";
 
-
-const router = createBrowserRouter([
+const router = createHashRouter([
     {
         path: "/",
         element: <UserInfo />,
@@ -20,9 +19,8 @@ const router = createBrowserRouter([
     },
 ]);
 
-
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+    document.getElementById("root") as HTMLElement
 );
 root.render(
     <React.StrictMode>
