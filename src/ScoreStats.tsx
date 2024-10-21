@@ -71,7 +71,9 @@ function cumsum(arr: number[]): number[] {
 }
 
 function ScoreStats({ gameState }: ScoreStatsProps) {
-    const totalScores = getTotalScores(gameState);
+    const sortedScores = Object.entries(getTotalScores(gameState))
+        .sort(([_, scoreA], [__, scoreB]) => scoreA - scoreB)
+        .map(([name, score]) => ({ name, score }));
 
     const datasets = Object.entries(gameState).map(
         ([playerName, data], index) => ({
@@ -81,33 +83,35 @@ function ScoreStats({ gameState }: ScoreStatsProps) {
         })
     );
 
-    const num_rounds = gameState[Object.keys(gameState)[0]].length
+    const num_rounds = gameState[Object.keys(gameState)[0]].length;
 
-    console.log(gameState, datasets)
+    console.log(gameState, datasets);
 
     return (
         <Grid columns="2" gap="4" minHeight="400" width="auto" m="4">
             <Card>
                 <ol>
-                    {Object.entries(totalScores)
-                        .sort(([_, scoreA], [__, scoreB]) => scoreA - scoreB)
-                        .map(([name, score], index) => (
-                            <li key={name}>
-                                <Flex gap="4" align="center">
-                                    <Text>{name}</Text>{" "}
-                                    <Flex flexGrow="1" justify="end">
-                                        <Badge
-                                            size="1"
-                                            color={
-                                                COLOUR_KEYS[index % NUM_COLOURS]
-                                            }
-                                        >
-                                            {score}
-                                        </Badge>
-                                    </Flex>
+                    {sortedScores.map(({ name, score }) => (
+                        <li key={name}>
+                            <Flex gap="4" align="center">
+                                <Text>{name}</Text>{" "}
+                                <Flex flexGrow="1" justify="end">
+                                    <Badge
+                                        size="1"
+                                        color={
+                                            COLOUR_KEYS[
+                                                Object.keys(gameState).indexOf(
+                                                    name
+                                                ) % NUM_COLOURS
+                                            ]
+                                        }
+                                    >
+                                        {score}
+                                    </Badge>
                                 </Flex>
-                            </li>
-                        ))}
+                            </Flex>
+                        </li>
+                    ))}
                 </ol>
             </Card>
             <Card>
